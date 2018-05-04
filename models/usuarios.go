@@ -5,7 +5,7 @@ import (
 )
 
 //Usuario representa o usuário na base de dados
-type Usuario struct {
+type Usuarios struct {
 	ID    int    `json:"id" db:"id"`
 	Nome  string `json:"nome" db:"nome"`
 	Email string `json:"email" db:"email"`

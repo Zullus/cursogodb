@@ -2,10 +2,22 @@
 
 
 [[projects]]
+  branch = "master"
+  name = "github.com/MarcusMann/pongor-echo"
+  packages = ["."]
+  revision = "07a24ab1ce48e10d85e490c6fc0a802b6de3eed4"
+
+[[projects]]
   name = "github.com/dgrijalva/jwt-go"
   packages = ["."]
   revision = "06ea1031745cb8b3dab3f6a236daf2b0aa468b7e"
   version = "v3.2.0"
+
+[[projects]]
+  name = "github.com/flosch/pongo2"
+  packages = ["."]
+  revision = "5e81b817a0c48c1c57cdf1a9056cf76bdee02ca9"
+  version = "v3.0"
 
 [[projects]]
   name = "github.com/go-sql-driver/mysql"
@@ -76,7 +88,15 @@
   name = "upper.io/db.v3"
   packages = [
     ".",
-    "internal/immutable"
+    "internal/cache",
+    "internal/cache/hashstructure",
+    "internal/immutable",
+    "internal/sqladapter",
+    "internal/sqladapter/compat",
+    "internal/sqladapter/exql",
+    "lib/reflectx",
+    "lib/sqlbuilder",
+    "mysql"
   ]
   revision = "bba00b389f7e9cfdd8988e08c2832ab39119d7cf"
   version = "v3.5.2"
@@ -84,6 +104,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "d5e150e5fd3651e04593a084437e2785b7e8f1213ec5d5e948580f91d74ee459"
+  inputs-digest = "814722005462d6e9dbdb8f656f7351196c277097793a061f6db058c404d7c465"
   solver-name = "gps-cdcl"
   solver-version = 1

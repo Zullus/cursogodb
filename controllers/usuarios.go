@@ -11,7 +11,23 @@ import (
 //Home é a página inicial da aplicação
 func Home(c echo.Context) error {
 
-	return c.String(http.StatusOK, "Olá Mundo!")
+	var usuarios []models.Usuarios
+
+	if err := models.UsuarioModel.Find().All(&usuarios); err != nil {
+
+		return c.JSON(http.StatusBadRequest, map[string]string{
+
+			"mensagem": "Erro ao tentar recuperar os dados",
+		})
+	}
+
+	data := map[string]interface{}{
+		"titulo":   "Listagem de Usuários",
+		"usuarios": usuarios,
+	}
+
+	//return c.String(http.StatusOK, "Olá Mundo!")
+	return c.Render(http.StatusOK, "index.html", data)
 
 }
 
@@ -28,7 +44,7 @@ func Inserir(c echo.Context) error {
 	nome := c.FormValue("nome")
 	email := c.FormValue("email")
 
-	var ususario models.Usuario
+	var ususario models.Usuarios
 	ususario.Nome = nome
 	ususario.Email = email
 

@@ -20,4 +20,6 @@ func init() {
 	api.POST("insert", controllers.Inserir)
 
 	api.GET("insert", controllers.InserGet)
+
+	api.DELETE("delete/:id", controllers.Deletar)
 }

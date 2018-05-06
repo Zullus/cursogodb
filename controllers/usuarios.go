@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/labstack/echo"
 
@@ -70,4 +71,33 @@ func Inserir(c echo.Context) error {
 
 		"mensagem": "Os campos não podem ser vazios!",
 	})
+}
+
+//Deletar Usuário do banco
+func Deletar(c echo.Context) error {
+
+	usuarioID, _ := strconv.Atoi(c.Param("id"))
+
+	resultado := models.UsuarioModel.Find("id=?", usuarioID)
+
+	if count, _ := resultado.Count(); count < 1 {
+
+		return c.JSON(http.StatusNotFound, map[string]string{
+			"mensagem": "Não foi possível encontrar o usuário",
+		})
+
+	}
+
+	if err := resultado.Delete(); err != nil {
+
+		return c.JSON(http.StatusBadRequest, map[string]string{
+			"mensagem": "Não foi possíel deletar o usuário",
+		})
+
+	}
+
+	return c.JSON(http.StatusAccepted, map[string]string{
+		"mensagem": "Usuário deletado com sucesso",
+	})
+
 }

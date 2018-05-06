@@ -14,3 +14,7 @@ required = ["github.com/labstack/echo"]
 [[constraint]]
   branch = "master"
   name = "github.com/MarcusMann/pongor-echo"
+
+[[constraint]]
+  name = "github.com/dgrijalva/jwt-go"
+  version = "3.2.0"

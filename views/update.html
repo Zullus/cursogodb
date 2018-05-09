@@ -49,10 +49,10 @@
             method: "put",
             dataType: "json",
             data: $("#usario-form").serialize(),
-            success: function(){
-                console.log("Atualização realizada com sucesso!")
+            complete: function(){
+                window.location.href = '/';
             }
-        })
+        });
 
 
     }

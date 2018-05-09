@@ -142,11 +142,11 @@ func Atualizar(c echo.Context) error {
 		})
 	}
 
-	// return c.JSON(http.StatusAccepted, map[string]string{
-	// 	"mensagem": "Usuário alerado com sucesso",
-	// })
+	return c.JSON(http.StatusAccepted, map[string]string{
+		"mensagem": "Usuário alerado com sucesso",
+	})
 
-	return c.Redirect(http.StatusFound, "/")
+	//return c.Redirect(http.StatusFound, "/")
 }
 
 //Update busca o usuário para o template

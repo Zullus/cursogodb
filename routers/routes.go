@@ -15,6 +15,10 @@ func init() {
 	//Rota para a pagina inical
 	App.GET("/", controllers.Home)
 
+	App.GET("/add", controllers.Add)
+
+	App.GET("/atualizar/:id", controllers.Update)
+
 	api := App.Group("/v1/")
 
 	api.POST("insert", controllers.Inserir)
@@ -22,4 +26,7 @@ func init() {
 	api.GET("insert", controllers.InserGet)
 
 	api.DELETE("delete/:id", controllers.Deletar)
+
+	api.PUT("update/:id", controllers.Atualizar)
+
 }

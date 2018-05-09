@@ -60,10 +60,13 @@ func Inserir(c echo.Context) error {
 
 		}
 
-		return c.JSON(http.StatusCreated, map[string]string{
+		// return c.JSON(http.StatusCreated, map[string]string{
 
-			"mensagem": "Os dados foram inseridos no banco de dados com sucesso!",
-		})
+		// 	"mensagem": "Os dados foram inseridos no banco de dados com sucesso!",
+		// })
+
+		//Redirecionando para a Home(!)
+		return c.Redirect(http.StatusFound, "/")
 
 	}
 
@@ -99,5 +102,82 @@ func Deletar(c echo.Context) error {
 	return c.JSON(http.StatusAccepted, map[string]string{
 		"mensagem": "Usuário deletado com sucesso",
 	})
+
+}
+
+//Add formulário para adicionar novo usuário
+func Add(c echo.Context) error {
+
+	return c.Render(http.StatusOK, "add.html", nil)
+
+}
+
+//Atualizar atualiza usuário
+func Atualizar(c echo.Context) error {
+
+	usuarioID, _ := strconv.Atoi(c.Param("id"))
+	nome := c.FormValue("nome")
+	email := c.FormValue("email")
+
+	var usuario = models.Usuarios{
+		ID:    usuarioID,
+		Nome:  nome,
+		Email: email,
+	}
+
+	resultado := models.UsuarioModel.Find("id=?", usuarioID)
+
+	if count, _ := resultado.Count(); count < 1 {
+
+		return c.JSON(http.StatusNotFound, map[string]string{
+			"mensagem": "Usuário não existe!",
+		})
+
+	}
+
+	if err := resultado.Update(usuario); err != nil {
+
+		return c.JSON(http.StatusBadRequest, map[string]string{
+			"mensagem": "Erro ao atualizar o usuário!",
+		})
+	}
+
+	// return c.JSON(http.StatusAccepted, map[string]string{
+	// 	"mensagem": "Usuário alerado com sucesso",
+	// })
+
+	return c.Redirect(http.StatusFound, "/")
+}
+
+//Update busca o usuário para o template
+func Update(c echo.Context) error {
+
+	var usuarioID, _ = strconv.Atoi(c.Param("id"))
+
+	var usuario models.Usuarios
+
+	resultado := models.UsuarioModel.Find("id=?", usuarioID)
+
+	if count, _ := resultado.Count(); count < 1 {
+
+		return c.JSON(http.StatusNotFound, map[string]string{
+			"mensagem": "Usuário não existe!",
+		})
+
+	}
+
+	if err := resultado.One(&usuario); err != nil {
+
+		return c.JSON(http.StatusBadRequest, map[string]string{
+			"mensagem": "Não foi possível encontrar usuário!",
+		})
+
+	}
+
+	var data = map[string]interface{}{
+		"usuario": usuario,
+	}
+
+	return c.Render(http.StatusOK, "update.html", data)
 
 }

@@ -4,32 +4,67 @@
 
 {% block body %} 
 
-<div class="jumbotron" style="margin-top: 200px;">
     <div class="container">
-        <h1>Lista de Usuários</h1>
 
-        <div class="table-responsive">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nome</th>
-                        <th>E-mail</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for usuario in usuarios%}
-                    <tr>
-                        <td>{{usuario.ID}}</td>
-                        <td>{{usuario.Nome}}</td>
-                        <td>{{usuario.Email}}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+        <div class="jumbotron" style="margin-top: 200px;">
+
+            <a class="btn btn-lg btn-success" href="/add" style="margin-top: 20px">Criar novo usuário</a>
+            
+            <div class="container">
+                <h1 class="text-center">Lista de Usuários</h1>
         
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nome</th>
+                                <th>E-mail</th>
+                                <th>Ferramentas</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for usuario in usuarios%}
+                            <tr id="usuario-row-{{usuario.ID}}">
+                                <td>{{usuario.ID}}</td>
+                                <td>{{usuario.Nome}}</td>
+                                <td>{{usuario.Email}}</td>
+                                <td>
+                                    <a href="/atualizar/{{usuario.ID}}" class="btn btn-lg btn-warning" style="margin-right: 5px;">
+                                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                                    </a>
+                                    
+                                    <a class="btn btn-lg btn-danger" onclick="deletarUsuario('{{usuario.ID}}')">
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                
+            </div>
+        </div>
     </div>
-</div>
+
+{% endblock %}
+
+{% block js%}
+
+<script>
+
+    function deletarUsuario(pk){
+
+        $.ajax({
+            url: "/v1/delete/" + pk,
+            method: "delete",
+            success: function(dataRaw){
+                $("#usuario-row-" + pk).remove()
+            }
+        })
+    }
+
+</script>
 
 {% endblock %}

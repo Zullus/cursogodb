@@ -4,7 +4,7 @@ import (
 	"github.com/Zullus/usuarios/lib"
 )
 
-//Usuario representa o usuário na base de dados
+//Usuarios representa o usuário na base de dados
 type Usuarios struct {
 	ID    int    `json:"id" db:"id"`
 	Nome  string `json:"nome" db:"nome"`
